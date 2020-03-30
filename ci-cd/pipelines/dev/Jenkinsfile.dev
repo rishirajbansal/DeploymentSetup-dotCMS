@@ -49,7 +49,7 @@ pipeline {
                 script {
                     echo "Setting up the env variables..."
 
-                    env.GIT_BRANCH = getEnvVar('GIT_BRANCH')
+                    env.GIT_BRANCH_NAME = getEnvVar('GIT_BRANCH_NAME')
                     env.GIT_CREDENTIALS_ID = getEnvVar('GIT_CREDENTIALS_ID')
                     env.GIT_REPO_URL = getEnvVar('GIT_REPO_URL')
                     env.GIT_DOWNLOAD_DIR = getEnvVar('GIT_DOWNLOAD_DIR')

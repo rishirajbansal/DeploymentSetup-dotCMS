@@ -24,7 +24,7 @@ git rev-parse --is-inside-work-tree
 git config remote.origin.url ${GIT_REPO_URL} 
 git config --global user.name "rishirajbansal"
 
-git pull origin ${GIT_BRANCH}
+git pull origin ${GIT_BRANCH_NAME}
 
 # git fetch --progress -- ${GIT_REPO_URL} +refs/heads/master:refs/remotes/origin/master # timeout=120
 # git checkout origin/master
