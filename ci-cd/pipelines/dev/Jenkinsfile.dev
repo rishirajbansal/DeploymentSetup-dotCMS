@@ -96,7 +96,11 @@ pipeline {
             steps {
                 echo "Deployment in progress..."
 
-                sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh deploy"
+                withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'DOTCMS_REMOTE_APPLICATION_SERVER', \
+                                             keyFileVariable: 'appServerPemKey')]) {
+
+                    sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh deploy ${appServerPemKey}"
+                }
 
                 echo "Deployment is done."
             }
@@ -113,7 +117,11 @@ pipeline {
             steps {
                 echo "Following are the deployment details: "
 
-                sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh postdeploy"
+                 withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'DOTCMS_REMOTE_APPLICATION_SERVER', \
+                                             keyFileVariable: 'appServerPemKey')]) {
+
+                    sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh postdeploy ${appServerPemKey}"
+                }
             }
 
         }
