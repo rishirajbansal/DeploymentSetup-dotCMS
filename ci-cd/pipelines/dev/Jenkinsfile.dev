@@ -42,6 +42,10 @@ pipeline {
             steps {
                 echo "Initializing CI/CD environment..."
 
+                 sh '''
+                    find ${CICD_SCRIPT_LOCATION} -type f -iname "*.sh" -exec chmod u+x {} +
+                '''
+
                 script {
                     echo "Setting up the env variables..."
 
