@@ -6,6 +6,7 @@ set -x #echo on
 
 
 handler=$1
+appServerPemKey=$2
 
 echo "Handler : $handler"
 
