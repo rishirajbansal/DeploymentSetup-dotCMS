@@ -22,6 +22,7 @@ git init
 git rev-parse --is-inside-work-tree
 
 git config remote.origin.url ${GIT_REPO_URL} 
+git config --global user.name 'rishirajbansal'
 
 git pull origin ${GIT_BRANCH}
 
