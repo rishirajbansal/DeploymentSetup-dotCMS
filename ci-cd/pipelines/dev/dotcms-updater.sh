@@ -21,7 +21,7 @@ git init
 
 git rev-parse --is-inside-work-tree
 
-git config remote.origin.url ${GIT_REPO_URL} \# timeout=120
+git config remote.origin.url ${GIT_REPO_URL} 
 
 git pull origin ${GIT_BRANCH}
 
