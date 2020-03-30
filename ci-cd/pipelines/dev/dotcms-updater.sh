@@ -17,11 +17,13 @@ cd dotCMS
 
 echo "Fetching latest code from GitHub..."
 
+GIT_REPO_URL_AUTH="https://rishirajbansal:Bondcave007$" + "@" + ${GIT_REPO_URL} 
+
 git init
 
 git rev-parse --is-inside-work-tree
 
-git config remote.origin.url ${GIT_REPO_URL} 
+git config remote.origin.url ${GIT_REPO_URL_AUTH} 
 git config --global user.name "rishirajbansal"
 
 git pull origin ${GIT_BRANCH_NAME}
