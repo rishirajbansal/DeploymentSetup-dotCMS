@@ -17,8 +17,8 @@ cd dotCMS
 
 echo "Fetching latest code from GitHub..."
 
-GIT_REPO_URL_AUTH="https://rishirajbansal:Bondcave007$"
-GIT_REPO_URL_AUTH+="@"
+GIT_REPO_URL_AUTH="https://rishirajbansal:Bondcave007$ "
+GIT_REPO_URL_AUTH+="@ "
 GIT_REPO_URL_AUTH+=${GIT_REPO_URL} 
 
 git init
