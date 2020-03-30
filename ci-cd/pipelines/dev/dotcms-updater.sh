@@ -51,4 +51,4 @@ unzip dotCMS.zip -d .
 # 5-> Start new Docker Container
 cd ${APP_DIR}/app
 
-docker-compose up --build -d
+# docker-compose up --build -d
