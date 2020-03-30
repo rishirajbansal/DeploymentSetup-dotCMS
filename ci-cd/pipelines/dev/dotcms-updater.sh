@@ -17,6 +17,10 @@ cd dotCMS
 
 echo "Fetching latest code from GitHub..."
 
+export GIT_TRACE_PACKET=1
+export GIT_TRACE=1
+export GIT_CURL_VERBOSE=1
+
 GIT_REPO_URL_1="https://${DOTCMS_GIT_CREDS}"
 GIT_REPO_URL_2="@${GIT_REPO_URL}"
 GIT_REPO_URL_AUTH=${GIT_REPO_URL_1}${GIT_REPO_URL_2}
@@ -26,6 +30,7 @@ git init
 git rev-parse --is-inside-work-tree
 
 git config remote.origin.url ${GIT_REPO_URL_AUTH} 
+git config --global http.postBuffer 1048576000
 # git config --global user.name "rishirajbansal"
 
 git pull origin ${GIT_BRANCH_NAME}
