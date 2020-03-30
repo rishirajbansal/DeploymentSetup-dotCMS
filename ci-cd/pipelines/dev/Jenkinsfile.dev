@@ -1,0 +1,148 @@
+#!/usr/bin/env groovy
+
+def getEnvVar(String envVarName){
+    return sh (script: "grep '${envVarName}' ${CICD_SCRIPT_LOCATION}/env.properties|cut -d'=' -f2", returnStdout: true).trim();
+}
+
+pipeline {
+
+    agent any
+
+    environment {
+        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/dev"
+        
+    }
+
+    stages {
+        
+
+        // stage('checkout') {
+        //     steps {
+        //         echo "Checkout source code from GitHub..."
+
+        //         checkout changelog: false, 
+        //             poll: false,
+        //             scm: [
+        //                 $class: 'GitSCM', 
+        //                 //branches: [[name: '*/${env.BRANCH_NAME}']], 
+        //                 branches: [[name: '*/master']], 
+        //                 doGenerateSubmoduleConfigurations: false, 
+        //                 extensions: [[$class: 'CloneOption', timeout: 120]],
+        //                 submoduleCfg: [], 
+        //                 userRemoteConfigs: [
+        //                     //[credentialsId: '${env.GIT_CREDENTIALS_ID}', url: '${env.GIT_REPO_URL}']
+        //                     [credentialsId: 'dotcms-git', url: 'https://github.com/rishirajbansal/dyty-emd-dotcms']
+        //                 ]
+        //             ]
+        //     }
+
+        // }
+
+        stage('Init') {
+            steps {
+                echo "Initializing CI/CD environment..."
+
+                script {
+                    echo "Setting up the env variables..."
+
+                    env.GIT_BRANCH = getEnvVar('GIT_BRANCH')
+                    env.GIT_CREDENTIALS_ID = getEnvVar('GIT_CREDENTIALS_ID')
+                    env.GIT_REPO_URL = getEnvVar('GIT_REPO_URL')
+                    env.GIT_DOWNLOAD_DIR = getEnvVar('GIT_DOWNLOAD_DIR')
+                    env.APP_DIR = getEnvVar('APP_DIR')
+                    env.REMOTE_SERVER_INSTANCE_USER = getEnvVar('REMOTE_SERVER_INSTANCE_USER')
+                    env.REMOTE_SERVER_INSTANCE_IP = getEnvVar('REMOTE_SERVER_INSTANCE_IP')
+                    env.DB_CONTAINER_NAME = getEnvVar('DB_CONTAINER_NAME')
+                    env.NFS_CONTAINER_NAME = getEnvVar('NFS_CONTAINER_NAME')
+                    env.APP_CONTAINER_NAME = getEnvVar('APP_CONTAINER_NAME')
+                    env.DOCKER_LOG_LEVEL = getEnvVar('DOCKER_LOG_LEVEL')
+                    env.DOTCMS_APP_PORT = getEnvVar('DOTCMS_APP_PORT')
+
+                }
+
+
+            }
+        }
+
+        stage('pre-cleanup') {
+            steps {
+                echo "Pre Cleaning up the environment..."
+
+                //clean up the whole workspace
+                // cleanWs(){
+                // }
+            }
+        }
+
+        // stage('docker-cleanup') {
+        //     steps {
+        //         echo "Cleaning up the Docker images, containers..."
+
+        //         sh "${CICD_SCRIPT_LOCATION}/docker-handler.dev.sh cleanup"
+        //     }
+        // }
+
+        stage('deploy') {
+            when {
+                allOf {
+                    expression {currentBuild.result == null || currentBuild.result == 'SUCCESS'}
+                }
+            }
+
+            steps {
+                echo "Deployment in progress..."
+
+                sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh deploy"
+
+                echo "Deployment is done."
+            }
+        }
+
+        stage('postdeploy') {
+
+             when {
+                allOf {
+                    expression {currentBuild.result == null || currentBuild.result == 'SUCCESS'}
+                }
+            }
+
+            steps {
+                echo "Following are the deployment details: "
+
+                sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh postdeploy"
+            }
+
+        }
+
+    }
+
+    post {
+
+        always {
+            echo "CI/CD process is finished."
+
+            echo "Build No.: ${env.BUILD_NUMBER}"
+            echo "Build ID.: ${env.BUILD_ID}"
+            //Branch name only accessible for Multi-Branch pipeline
+            //echo "Branch Name: ${BRANCH_NAME}"
+            echo "Build Status: ${currentBuild.currentResult}"
+            echo "Job Name: ${JOB_NAME}"
+            echo "Workspace Location: ${WORKSPACE}"
+            echo "Build completed in : ${currentBuild.durationString}"
+        }
+
+        success {
+            echo "CI/CD process is successfull and application is deployed."
+        }
+
+        failure {
+            echo "CI/CD process failed"
+        }
+
+        cleanup {
+             echo "In Post-cleanup, no cleanup required as of now."
+        }
+
+    }
+
+}

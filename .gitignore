@@ -1,0 +1,19 @@
+### Excluding Miscellaneous Files ###
+
+
+### Excluding Frontend files ###
+# Visual Studio Code workspace file
+**/*.code-workspace
+**/.vscode
+
+# Other Files
+**/.idea
+.idea
+.idea/*
+**/logs
+logs
+**/venv
+.DS_Store
+
+# Dotcms files
+**/*_bug_report.xml

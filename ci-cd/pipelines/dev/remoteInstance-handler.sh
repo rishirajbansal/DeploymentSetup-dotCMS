@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Connect to remote dotCMS Application server Instance
+
+set -x #echo on
+
+
+handler=$1
+
+echo "Handler : $handler"
+
+
+if [ "$handler" = "deploy" ] 
+then
+
+    ssh ${REMOTE_SERVER_INSTANCE_USER}@${REMOTE_SERVER_INSTANCE_IP} GIT_DOWNLOAD_DIR=${GIT_DOWNLOAD_DIR} APP_DIR=${APP_DIR} \
+        GIT_REPO_URL=${GIT_REPO_URL} GIT_BRANCH=${GIT_BRANCH} APP_CONTAINER_NAME=${APP_CONTAINER_NAME} \
+        'sh -s' < ${CICD_SCRIPT_LOCATION}/dotcms-updater.sh
+
+
+elif [ "$handler" = "postdeploy" ]
+then
+
+    echo "Access Web Application : http://${REMOTE_SERVER_INSTANCE_IP}:${DOTCMS_APP_PORT}"
+
+else
+    echo "Invalid Handler passed to script."
+fi
