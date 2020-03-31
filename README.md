@@ -14,8 +14,8 @@
 
 | Local Machine  | Remote Machine (Server) |
 | ------------- | ------------- |
-| Jenkins running inside Docker  | - Swarm Initialized |
-| SSH keypair configured to access Remote Server | - Overlay Network created |
+| - Jenkins running inside Docker  | - Swarm Initialized |
+| - SSH keypair configured to access Remote Server | - Overlay Network created |
 |  | - PostgreSQL DB on Docker Container |
 |  | - NFS Server on Docker |
 |  | - dotCMS Application on Docker (via Jenkins) |
