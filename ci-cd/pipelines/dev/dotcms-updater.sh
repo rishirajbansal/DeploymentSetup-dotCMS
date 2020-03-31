@@ -82,7 +82,7 @@ echo "dotCMS artifacts are moved and extracted in project folder"
 
 # 5-> Start new Docker Container
 echo "Building dotCMS docker container with new Project artifacts..."
-cd ${APP_DIR}/app
+cd ${APP_DIR}/dotCMS/app
 
 # docker-compose up --build -d
 echo "Updated dotCMS docker container with latest build is up and running."
