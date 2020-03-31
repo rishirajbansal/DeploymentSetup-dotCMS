@@ -80,7 +80,7 @@ cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
 
 cd ${APP_DIR}
 
-unzip -q dotCMS.zip -d .
+unzip -q -o dotCMS.zip -d .
 find dotCMS -type f -iname "*.sh" -exec chmod u+x {} +
 echo "dotCMS artifacts are moved and extracted in project folder"
 
