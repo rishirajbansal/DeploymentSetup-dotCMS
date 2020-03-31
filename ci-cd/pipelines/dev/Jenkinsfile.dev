@@ -64,6 +64,7 @@ pipeline {
                     env.DOTCMS_APP_PORT = getEnvVar('DOTCMS_APP_PORT')
                     env.NFS_CONTAINER_IP = getEnvVar('NFS_CONTAINER_IP')
                     env.VOLUME_NFS = getEnvVar('VOLUME_NFS')
+                    env.APP_IMAGE_NAME = getEnvVar('APP_IMAGE_NAME')
 
                 }
 

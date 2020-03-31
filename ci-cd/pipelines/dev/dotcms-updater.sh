@@ -63,6 +63,9 @@ echo "${APP_CONTAINER_NAME} Removed."
 docker volume rm ${VOLUME_NFS}
 echo "Existing NFS Volume Removed."
 
+docker rmi ${APP_IMAGE_NAME}
+echo "Existing image Removed."
+
 # 4-> Download and unzip latest code files
 echo "Moving dotCMS artifacts to dotCMS project location..."
 
