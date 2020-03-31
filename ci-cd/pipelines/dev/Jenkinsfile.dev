@@ -16,6 +16,9 @@ pipeline {
 
     stages {
         
+        /* 
+            No need to checkout code from Git, as this code is not being pulled from shell script, leaving this code as a reference for later uses 
+        */
 
         // stage('checkout') {
         //     steps {
@@ -67,7 +70,6 @@ pipeline {
                     env.APP_IMAGE_NAME = getEnvVar('APP_IMAGE_NAME')
 
                 }
-
 
             }
         }
