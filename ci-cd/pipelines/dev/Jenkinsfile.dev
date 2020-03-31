@@ -17,7 +17,7 @@ pipeline {
     stages {
         
         /* 
-            No need to checkout code from Git, as this code is not being pulled from shell script, leaving this code as a reference for later uses 
+            No need to checkout code from Git, as this code is now being pulled from shell script, leaving this code as a reference for later uses 
         */
 
         // stage('checkout') {
