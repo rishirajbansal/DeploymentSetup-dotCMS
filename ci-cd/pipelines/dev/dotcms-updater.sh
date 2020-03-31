@@ -40,6 +40,7 @@ git pull origin ${GIT_BRANCH_NAME}
 
 echo "Git code saved in : ${GIT_DOWNLOAD_DIR}"
 
+
 # 2-> Zip git folder
 #cd ${GIT_DOWNLOAD_DIR}
 if [ -f ${GIT_DOWNLOAD_DIR}/dotCMS.zip ]
@@ -47,14 +48,20 @@ then
     rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
 fi
 
-zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${GIT_DOWNLOAD_DIR}/dotCMS/dotCMS/app/*
+echo "Compressing dotCMS Artifcats in zip..."
+cd ${GIT_DOWNLOAD_DIR}/dotCMS/dotCMS
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip app/*
+echo "Compression of dotCMS Artifcats in zip format done."
+
 
 # 3-> Shut down dotCMS Container
+echo "Stopping and Removing dotCMS app container..."
 docker container stop ${APP_CONTAINER_NAME}
 echo "${APP_CONTAINER_NAME} Stopped."
 
 docker container rm --force ${APP_CONTAINER_NAME}
 echo "${APP_CONTAINER_NAME} Removed."
+
 
 # 4-> Download and unzip latest code files
 rm -rf ${APP_DIR}/*
@@ -64,13 +71,18 @@ then
     rm ${APP_DIR}/dotCMS.zip
 fi
 
+echo "Moving dotCMS artifacts to dotCMS project location..."
 cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
 
 cd ${APP_DIR}
 
-unzip dotCMS.zip -d .
+unzip -q dotCMS.zip -d .
+echo "dotCMS artifacts are moved and extracted in project folder"
+
 
 # 5-> Start new Docker Container
+echo "Building dotCMS docker container with new Project artifacts..."
 cd ${APP_DIR}/app
 
 # docker-compose up --build -d
+echo "Updated dotCMS docker container with latest build is up and running."
