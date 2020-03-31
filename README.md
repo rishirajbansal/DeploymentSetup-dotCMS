@@ -10,7 +10,14 @@
 
 ## Overview
 
+Automated release management for deploying dotCMS application on remote Development server. This is achieved through CI/CD pipeline which imports latest project artifacts from GitHub Repository and deploy them to remote server on which dotCMS application is running, executing all prerequisites required to setup the application. 
+
+CI/CD Pipeline is implemented in Jenkins server which runs inside the Docker in local host machine. Jenkins pipeline connects with remote machine via secure SSH protocol based on private/public keypair authentication. It deploys the project artifacts in remote server and then build up new Docker image with latest code. It starts new Docker container for dotCMS application and bring up the dotCMS application up to be accessible from outside of remote machine.
+
+
 ### Machines Configuration
+
+Following configuration is assumed for this setup:
 
 | Local Machine  | Remote Machine (Server) |
 | ------------- | ------------- |
