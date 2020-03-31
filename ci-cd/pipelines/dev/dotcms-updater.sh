@@ -47,7 +47,7 @@ then
     rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
 fi
 
-zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip ./dotCMS/dotCMS/app/*
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip dotCMS/dotCMS/app/*
 
 # 3-> Shut down dotCMS Container
 docker container stop ${APP_CONTAINER_NAME}
