@@ -10,6 +10,15 @@
 
 ## Overview
 
+### Machines Configuration
+
+| Local Machine  | Remote Machine (Server) |
+| ------------- | ------------- |
+| Jenkins running inside Docker  | - Swarm Initialized |
+| SSH keypair configured to access Remote Server | - Overlay Network created |
+|  | - PostgreSQL DB on Docker Container |
+|  | - NFS Server on Docker |
+|  | - dotCMS Application on Docker (via Jenkins) |
 
 
 ## Prerequisites
@@ -118,7 +127,7 @@ To access remote machine from the script (via Jenkins) using SSH, it is required
 To setup SSH key in Jenkins, open:
 Jenkins -> Credentials -> System -> Global credentials (unrestricted)
 
-Provide unique ID that will be used in Jenkinsfile to identify the SSH account. Copy the content from SSH Private key and paste down to the Private Key text box.
+Provide unique ID (DOTCMS_REMOTE_APPLICATION_SERVER) that will be used in Jenkinsfile to identify the SSH account. Copy the content from SSH Private key and paste down to the Private Key text box.
 
 Add SSH Key Credentials as shown in the following screen:
 
