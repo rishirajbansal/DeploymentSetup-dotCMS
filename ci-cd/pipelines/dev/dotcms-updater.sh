@@ -49,8 +49,8 @@ then
 fi
 
 echo "Compressing dotCMS Artifcats in zip..."
-cd ${GIT_DOWNLOAD_DIR}/dotCMS/dotCMS
-zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip app/*
+cd ${GIT_DOWNLOAD_DIR}/dotCMS
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip dotCMS/*
 echo "Compression of dotCMS Artifcats in zip format done."
 
 
@@ -64,7 +64,7 @@ echo "${APP_CONTAINER_NAME} Removed."
 
 
 # 4-> Download and unzip latest code files
-rm -rf ${APP_DIR}/*
+rm -rf ${APP_DIR}/dotCMS
 
 if [ -f ${APP_DIR}/dotCMS.zip ]
 then
