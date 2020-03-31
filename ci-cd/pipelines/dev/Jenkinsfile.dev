@@ -82,14 +82,6 @@ pipeline {
             }
         }
 
-        // stage('docker-cleanup') {
-        //     steps {
-        //         echo "Cleaning up the Docker images, containers..."
-
-        //         sh "${CICD_SCRIPT_LOCATION}/docker-handler.dev.sh cleanup"
-        //     }
-        // }
-
         stage('deploy') {
             when {
                 allOf {
@@ -139,8 +131,6 @@ pipeline {
 
             echo "Build No.: ${env.BUILD_NUMBER}"
             echo "Build ID.: ${env.BUILD_ID}"
-            //Branch name only accessible for Multi-Branch pipeline
-            //echo "Branch Name: ${BRANCH_NAME}"
             echo "Build Status: ${currentBuild.currentResult}"
             echo "Job Name: ${JOB_NAME}"
             echo "Workspace Location: ${WORKSPACE}"

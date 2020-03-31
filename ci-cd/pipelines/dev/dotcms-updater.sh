@@ -65,7 +65,7 @@ then
     docker container rm --force ${APP_CONTAINER_NAME}
     echo "${APP_CONTAINER_NAME} Removed."
 else
-    echo "Docker container for ${APP_CONTAINER_NAME} not found running"
+    echo "Docker container for ${APP_CONTAINER_NAME} NOT found running"
 fi
 
 docker volume rm ${VOLUME_NFS}
@@ -78,7 +78,7 @@ then
     docker rmi ${APP_IMAGE_NAME}
     echo "Existing image Removed."
 else
-    echo "Docker Image ${APP_IMAGE_NAME} not found existed."
+    echo "Docker Image ${APP_IMAGE_NAME} NOT found existed."
 fi
 
 
