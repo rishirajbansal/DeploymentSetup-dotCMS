@@ -64,6 +64,8 @@ echo "${APP_CONTAINER_NAME} Removed."
 
 
 # 4-> Download and unzip latest code files
+echo "Moving dotCMS artifacts to dotCMS project location..."
+
 rm -rf ${APP_DIR}/dotCMS
 
 if [ -f ${APP_DIR}/dotCMS.zip ]
@@ -71,7 +73,6 @@ then
     rm ${APP_DIR}/dotCMS.zip
 fi
 
-echo "Moving dotCMS artifacts to dotCMS project location..."
 cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
 
 cd ${APP_DIR}
@@ -84,5 +85,10 @@ echo "dotCMS artifacts are moved and extracted in project folder"
 echo "Building dotCMS docker container with new Project artifacts..."
 cd ${APP_DIR}/dotCMS/app
 
-# docker-compose up --build -d
+docker-compose up --build -d
 echo "Updated dotCMS docker container with latest build is up and running."
+
+
+# 6-> Removing extra files used during deployment
+rm ${APP_DIR}/dotCMS.zip
+rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
