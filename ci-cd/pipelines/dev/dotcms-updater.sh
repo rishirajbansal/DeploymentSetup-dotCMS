@@ -42,7 +42,12 @@ echo "Git code saved in : ${GIT_DOWNLOAD_DIR}"
 
 # 2-> Zip git folder
 #cd ${GIT_DOWNLOAD_DIR}
-zip -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ./*
+if [ -f ${GIT_DOWNLOAD_DIR}/dotCMS.zip ]
+then
+    rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
+fi
+
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip ./dotCMS/dotCMS/app/*
 
 # 3-> Shut down dotCMS Container
 docker container stop ${APP_CONTAINER_NAME}
@@ -54,7 +59,14 @@ echo "${APP_CONTAINER_NAME} Removed."
 # 4-> Download and unzip latest code files
 rm -rf ${APP_DIR}/*
 
+if [ -f ${APP_DIR}/dotCMS.zip ]
+then
+    rm ${APP_DIR}/dotCMS.zip
+fi
+
 cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
+
+cd ${APP_DIR}
 
 unzip dotCMS.zip -d .
 
