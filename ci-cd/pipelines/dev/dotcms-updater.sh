@@ -31,7 +31,6 @@ git rev-parse --is-inside-work-tree
 
 git config remote.origin.url ${GIT_REPO_URL_AUTH} 
 git config --global http.postBuffer 1048576000
-# git config --global user.name "rishirajbansal"
 
 git pull origin ${GIT_BRANCH_NAME}
 
@@ -42,7 +41,6 @@ echo "Git code saved in : ${GIT_DOWNLOAD_DIR}"
 
 
 # 2-> Zip git folder
-#cd ${GIT_DOWNLOAD_DIR}
 if [ -f ${GIT_DOWNLOAD_DIR}/dotCMS.zip ]
 then
     rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
@@ -80,6 +78,7 @@ cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
 cd ${APP_DIR}
 
 unzip -q dotCMS.zip -d .
+find dotCMS -type f -iname "*.sh" -exec chmod u+x {} +
 echo "dotCMS artifacts are moved and extracted in project folder"
 
 
