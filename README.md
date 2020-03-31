@@ -56,7 +56,7 @@ $ cd /path/to/DeploymentSetup-dotCMS/ci-cd/jenkins
 $ docker-compose up --build -d
 ```
 
-This will also mount Docker based Jenkins file to the directory `jenkinsData` which can help to inspect workspaces, jobs, logs or any other relevant information of Jenkins and thus avoiding to access Docker container to check these files.
+This will install Jenkins on Docker container and will also mount Jenkins files/folders to the directory `jenkinsData` which can help to inspect workspaces, jobs, logs or any other relevant information of Jenkins and thus avoiding to access Docker container to check these files.
 
 ### Accessing Jenkins 
 
