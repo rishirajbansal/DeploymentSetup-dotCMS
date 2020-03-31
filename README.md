@@ -10,9 +10,9 @@
 
 ## Overview
 
-Automated release management for deploying dotCMS application on remote Development server. This is achieved through CI/CD pipeline which imports latest project artifacts from GitHub Repository and deploy them to remote server on which dotCMS application is running, executing all prerequisites required to setup the application. 
+Automated release management for deploying dotCMS application on remote Development server. This is achieved through CI/CD pipeline, which imports latest project artifacts from GitHub Repository and deploy them to remote server on which dotCMS application is running, it executes all prerequisites required to setup the application. 
 
-CI/CD Pipeline is implemented in Jenkins server which runs inside the Docker in local host machine. Jenkins pipeline connects with remote machine via secure SSH protocol based on private/public keypair authentication. It deploys the project artifacts in remote server and then build up new Docker image with latest code. It starts new Docker container for dotCMS application and bring up the dotCMS application up to be accessible from outside of remote machine.
+CI/CD Pipeline is implemented in Jenkins server which runs inside the Docker in local host machine. Jenkins pipeline connects with remote machine via secure SSH protocol based on private/public keypair authentication. It deploys the project artifacts in remote server and then build up new Docker image with latest code. It starts new Docker container for dotCMS application and bring up dotCMS application up to be accessible from outside of remote machine.
 
 
 ### Machines Configuration
@@ -32,7 +32,7 @@ Following configuration is assumed for this setup:
 
 Remote Machine (Server) should already be setup with following configuration:
 
-- Swarm is already initialized and setup to use remote machine as manager node
+- Swarm is already initialized and setup as a manager node
 - 'Overlay' Driver Network created 
 - PostgreSQL database running inside Docker and up
 - NFS server running inside Docker and up
@@ -56,7 +56,7 @@ $ cd /path/to/DeploymentSetup-dotCMS/ci-cd/jenkins
 $ docker-compose up --build -d
 ```
 
-This will also mount Docker based Jenkins file to the directory 'jenkinsData' which can help to inspect workspaces, jobs, logs or any other relevant information of Jenkins and thus avoiding to access Docker container to check these files.
+This will also mount Docker based Jenkins file to the directory `jenkinsData` which can help to inspect workspaces, jobs, logs or any other relevant information of Jenkins and thus avoiding to access Docker container to check these files.
 
 ### Accessing Jenkins 
 
@@ -95,11 +95,11 @@ Setup SSH to access remote Machine from local Machine (where Jenkins will be run
 
     It will ask to enter the path to save the key credentials, recommended path is to store the keys along with other dotCMS application files. For Instance:
 
-    /path/to/dotcms/sshkey/dotcms_sshkey 
+    `/path/to/dotcms/sshkey/dotcms_sshkey`
 
 	It will ask to type a secure passphrase, it can be ignored and empty passphrase will be accepted.
 
-2. 	Once an SSH key has been created, the ssh-copy-id command can be used to install it as an authorized key on the server. Once the key has been authorized for SSH, it grants access to the server without a password.
+2. 	Once an SSH key has been created, the `ssh-copy-id` command can be used to install it as an authorized key on the server. Once the key has been authorized for SSH, it grants access to the server without a password.
 
     ```
     ssh-copy-id -i /path/to/sshkey/dotcms_sshkey user@remote-machine-ip
@@ -115,7 +115,7 @@ Setup SSH to access remote Machine from local Machine (where Jenkins will be run
 To pull the code from GitHub in Shell script, authentication with GitHub is required. For successful authentication, it is required to setup GitHub access credentials securely which is used in shell script via Jenkins credentials plugin. Jenkins will automatically authenticates with GitHub to access private GitHub repository in shell script.
 
 To setup GitHub credentials, open:
-Jenkins -> Credentials -> System -> Global credentials (unrestricted)
+*Jenkins -> Credentials -> System -> Global credentials (unrestricted)*
 
 Provide GitHub account username & password in the screen.
 
@@ -132,7 +132,7 @@ To access remote machine from the script (via Jenkins) using SSH, it is required
 *The private key is stored on the client device, and the public key is transferred to remote server as done during SSH Setup in one of the above step.*
 
 To setup SSH key in Jenkins, open:
-Jenkins -> Credentials -> System -> Global credentials (unrestricted)
+*Jenkins -> Credentials -> System -> Global credentials (unrestricted)*
 
 Provide unique ID (DOTCMS_REMOTE_APPLICATION_SERVER) that will be used in Jenkinsfile to identify the SSH account. Copy the content from SSH Private key and paste down to the Private Key text box.
 
