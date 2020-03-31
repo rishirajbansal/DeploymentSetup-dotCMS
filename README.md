@@ -87,7 +87,7 @@ This will complete Jenkins installation and setup.
 
 Setup SSH to access remote Machine from local Machine (where Jenkins will be running)
 
-1. Generate SSH Key pair to communicate with remote instance securely via SSH
+1. On local host machine, generate SSH Key pair to communicate with remote instance securely via SSH
 
     ```
 	ssh-keygen -t rsa -b 4096 -C "dotcmsl@dynamictype.com"
@@ -134,7 +134,7 @@ To access remote machine from the script (via Jenkins) using SSH, it is required
 To setup SSH key in Jenkins, open:
 *Jenkins -> Credentials -> System -> Global credentials (unrestricted)*
 
-Provide unique ID (DOTCMS_REMOTE_APPLICATION_SERVER) that will be used in Jenkinsfile to identify the SSH account. Copy the content from SSH Private key and paste down to the Private Key text box.
+Provide unique ID (`DOTCMS_REMOTE_APPLICATION_SERVER`) that will be used in Jenkinsfile to identify the SSH account. Copy the content from SSH Private key and paste down to the Private Key text box.
 
 Add SSH Key Credentials as shown in the following screen:
 
