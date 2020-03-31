@@ -24,7 +24,8 @@ then
 elif [ "$handler" = "postdeploy" ]
 then
 
-    echo "Access Web Application : http://${REMOTE_SERVER_INSTANCE_IP}:${DOTCMS_APP_PORT}"
+    echo "Access Web Application [User Portal] : http://${REMOTE_SERVER_INSTANCE_IP}:${DOTCMS_APP_PORT}"
+    echo "Access Web Application [Admin Portal] : http://${REMOTE_SERVER_INSTANCE_IP}:${DOTCMS_APP_PORT}/admin"
 
 else
     echo "Invalid Handler passed to script."
