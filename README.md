@@ -105,7 +105,7 @@ Setup SSH to access remote Machine from local Machine (where Jenkins will be run
     ssh-copy-id -i /path/to/sshkey/dotcms_sshkey user@remote-machine-ip
     ```
 
-    This logs into the remote server host, and copies keys to the server, and configures them to grant access by adding them to the authorized_keys file. 
+    This logs into the remote server host, and copies keys to the server, and configures them to grant access by adding them to the `authorized_keys` file. 
 
 
 ## Credentials Setup in Jenkins
