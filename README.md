@@ -90,7 +90,7 @@ Setup SSH to access remote Machine from local Machine (where Jenkins will be run
 1. On local host machine, generate SSH Key pair to communicate with remote instance securely via SSH
 
     ```
-	ssh-keygen -t rsa -b 4096 -C "dotcmsl@dynamictype.com"
+	ssh-keygen -t rsa -b 4096 -C "dotcms@dynamictype.com"
 	```
 
     It will ask to enter the path to save the key credentials, recommended path is to store the keys along with other dotCMS application files. For Instance:
