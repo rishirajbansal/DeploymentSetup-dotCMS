@@ -44,7 +44,7 @@ echo "Git code saved in : ${GIT_DOWNLOAD_DIR}"
 if [ -f ${GIT_DOWNLOAD_DIR}/dotCMS.zip ]
 then
     rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip
-fi
+fi  
 
 echo "Compressing dotCMS Artifcats in zip..."
 cd ${GIT_DOWNLOAD_DIR}/dotCMS

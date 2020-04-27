@@ -68,6 +68,8 @@ pipeline {
                     env.NFS_CONTAINER_IP = getEnvVar('NFS_CONTAINER_IP')
                     env.VOLUME_NFS = getEnvVar('VOLUME_NFS')
                     env.APP_IMAGE_NAME = getEnvVar('APP_IMAGE_NAME')
+                    env.DOTCMS_USERNAME = getEnvVar('DOTCMS_USERNAME')
+                    env.DOTCMS_USERNAME_PWD = getEnvVar('DOTCMS_USERNAME_PWD')
 
                 }
 

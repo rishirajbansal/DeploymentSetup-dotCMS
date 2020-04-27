@@ -3,6 +3,8 @@
 
 **/*.html linguist-vendored
 **/*.htm linguist-vendored
+**/*.css linguist-vendored
+**/*.pl linguist-vendored
 
 # Handle Dockerfile
 **/Dockerfile* linguist-detectable=true
