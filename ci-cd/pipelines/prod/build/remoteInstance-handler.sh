@@ -11,7 +11,7 @@ appServerPemKey=$2
 echo "Handler : $handler"
 
 
-if [ "$handler" = "deploy" ] 
+if [ "$handler" = "build" ] 
 then
 
     ssh -i ${appServerPemKey} -o StrictHostKeyChecking=no ${REMOTE_SERVER_INSTANCE_USER}@${REMOTE_SERVER_INSTANCE_IP} GIT_DOWNLOAD_DIR=${GIT_DOWNLOAD_DIR} APP_DIR=${APP_DIR} \
