@@ -24,8 +24,8 @@ git init
 
 git rev-parse --is-inside-work-tree
 
-git config --global --unset http.proxy 
-git config --global --unset https.proxy
+# git config --global --unset http.proxy 
+# git config --global --unset https.proxy
 
 git config remote.origin.url ${GIT_REPO_URL_AUTH} 
 git config --global http.postBuffer 1048576000
