@@ -43,7 +43,7 @@ fi
 
 echo "Compressing dotCMS Artifcats in zip..."
 cd ${GIT_DOWNLOAD_DIR}/dotCMS
-zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip dotCMS
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip .
 echo "Compression of dotCMS Artifcats in zip format done."
 
 
