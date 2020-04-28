@@ -123,7 +123,7 @@ Provide GitHub account username & password in the screen.
 
 Add Git Credentials as shown in the following screen:
 
-![GitHub Credentials Setup in Jenkins](/documentation/github_cred_setup.png)
+![GitHub Credentials Setup in Jenkins](/documentation/ci-cd/github_cred_setup.png)
 
 ### Setup SSH Keypair credentials to access remote machine (server)
 
@@ -138,7 +138,7 @@ Provide unique ID (`DOTCMS_REMOTE_APPLICATION_SERVER`) that will be used in Jenk
 
 Add SSH Key Credentials as shown in the following screen:
 
-![SSH Key Credentials Setup in Jenkins](/documentation/ssh_cred_setup.png)
+![SSH Key Credentials Setup in Jenkins](/documentation/ci-cd/ssh_cred_setup.png)
 
 
 ## Pipeline Setup in Jenkins
@@ -153,7 +153,7 @@ Create new Pipeline in Jenkins based on the general pipeline type project.
 
 Following image depicts Jenkins pipeline creation as a reference:
 
-![Jenkins Pipeline Creation](/documentation/jenkins_pipeline.png)
+![Jenkins Pipeline Creation](/documentation/ci-cd/jenkins_pipeline.png)
 
 
 ## Jenkins Environment Properties Configuration
