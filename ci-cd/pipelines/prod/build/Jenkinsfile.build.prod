@@ -36,6 +36,7 @@ pipeline {
                     env.APP_DIR = getEnvVar('APP_DIR')
                     env.REMOTE_SERVER_INSTANCE_USER = getEnvVar('REMOTE_SERVER_INSTANCE_USER')
                     env.REMOTE_SERVER_INSTANCE_IP = getEnvVar('REMOTE_SERVER_INSTANCE_IP')
+                    env.AWS_CLI_EXEC_PATH = getEnvVar('AWS_CLI_EXEC_PATH')
                     env.AWS_PROFILE_NAME = getEnvVar('AWS_PROFILE_NAME')
                     env.S3_BUCKET_NAME_APP = getEnvVar('S3_BUCKET_NAME_APP')
                     
