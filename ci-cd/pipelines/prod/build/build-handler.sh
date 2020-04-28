@@ -69,6 +69,8 @@ echo "dotCMS artifacts are moved and extracted in project folder"
 # 4-> Create and Upload - dotCMS App Bundle & EB Deployment Bundle to S3 bucket
 cd ${APP_DIR}/aws/prod/bin/ebAutomations
 
+aws --version
+
 echo "Calling 'createUploadAppBundle' to create and upload app bundle to S3"
 
 ./createUploadAppBundle.sh ${AWS_PROFILE_NAME} ${S3_BUCKET_NAME_APP}
