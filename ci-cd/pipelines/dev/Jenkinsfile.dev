@@ -60,6 +60,8 @@ pipeline {
                     env.APP_DIR = getEnvVar('APP_DIR')
                     env.REMOTE_SERVER_INSTANCE_USER = getEnvVar('REMOTE_SERVER_INSTANCE_USER')
                     env.REMOTE_SERVER_INSTANCE_IP = getEnvVar('REMOTE_SERVER_INSTANCE_IP')
+                    env.APP_LAUNCH_ENV = getEnvVar('APP_LAUNCH_ENV')
+                    env.CONTAINERS_TO_DEPLOY = getEnvVar('CONTAINERS_TO_DEPLOY')
                     env.DB_CONTAINER_NAME = getEnvVar('DB_CONTAINER_NAME')
                     env.NFS_CONTAINER_NAME = getEnvVar('NFS_CONTAINER_NAME')
                     env.APP_CONTAINER_NAME = getEnvVar('APP_CONTAINER_NAME')

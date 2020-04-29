@@ -80,3 +80,8 @@ echo "Calling 'createUploadEBDeployBundle' to create and upload EB Deployment Bu
 ./createUploadEBDeployBundle.sh ${AWS_PROFILE_NAME} ${S3_BUCKET_NAME_APP} ${AWS_CLI_EXEC_PATH}
 
 echo "Creating and Uploading of App Bundle and EB Deployment is done."
+
+
+# 5-> Removing extra files used during deployment
+rm ${APP_DIR}/dotCMS.zip
+rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip

@@ -76,3 +76,8 @@ echo "Calling 'deployAppToEB' to deploy application to AWS Elastic Beanstalk"
 ./deployAppToEB.sh ${AWS_PROFILE_NAME} ${S3_BUCKET_NAME_APP} ${EB_APPLICATION_NAME} ${EB_ENVIRONMENT_NAME} ${AWS_CLI_EXEC_PATH}
 
 echo "Application deployment to AWS Elastic Benastalk is done."
+
+
+# 5-> Removing extra files used during deployment
+rm ${APP_DIR}/dotCMS.zip
+rm ${GIT_DOWNLOAD_DIR}/dotCMS.zip

@@ -48,7 +48,7 @@ fi
 
 echo "Compressing dotCMS Artifcats in zip..."
 cd ${GIT_DOWNLOAD_DIR}/dotCMS
-zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip dotCMS
+zip -r -q ${GIT_DOWNLOAD_DIR}/dotCMS.zip . -x '*.git*'
 echo "Compression of dotCMS Artifcats in zip format done."
 
 
@@ -97,16 +97,26 @@ cp -r ${GIT_DOWNLOAD_DIR}/dotCMS.zip ${APP_DIR}
 cd ${APP_DIR}
 
 unzip -q -o dotCMS.zip -d .
-find dotCMS -type f -iname "*.sh" -exec chmod u+x {} +
+find . -type f -iname "*.sh" -exec chmod u+x {} +
 echo "dotCMS artifacts are moved and extracted in project folder"
 
 
 # 5-> Start new Docker Container
 echo "Building dotCMS docker container with new Project artifacts..."
-cd ${APP_DIR}/dotCMS/app
+echo "App Launch Environment : "${APP_LAUNCH_ENV}
+if [ "${APP_LAUNCH_ENV}" == "local" ] 
+then
+    cd ${APP_DIR}/appLauncher/local/
 
-docker-compose up --build -d
-echo "Updated dotCMS docker container with latest build is up and running."
+    ./launchApp-local.sh ${CONTAINERS_TO_DEPLOY}
+
+else
+    cd ${APP_DIR}/appLauncher/cluster/
+
+    ./launchApp-cluster.sh ${CONTAINERS_TO_DEPLOY}
+fi
+
+echo "Updated dotCMS docker container(s) with latest build is up and running."
 
 
 # 6-> Removing extra files used during deployment
