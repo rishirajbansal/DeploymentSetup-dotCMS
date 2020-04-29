@@ -101,9 +101,10 @@ find . -type f -iname "*.sh" -exec chmod u+x {} +
 echo "dotCMS artifacts are moved and extracted in project folder"
 
 
-# 5-> Start new Docker Container
+# 5-> Deploy dotCMS application container(s)
 echo "Building dotCMS docker container with new Project artifacts..."
 echo "App Launch Environment : "${APP_LAUNCH_ENV}
+
 if [ "$APP_LAUNCH_ENV" = "local" ] 
 then
     cd ${APP_DIR}/appLauncher/local/
