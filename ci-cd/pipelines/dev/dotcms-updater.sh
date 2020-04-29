@@ -53,33 +53,33 @@ echo "Compression of dotCMS Artifcats in zip format done."
 
 
 # 3-> Shut down dotCMS Container
-echo "Stopping and Removing dotCMS app container..."
+# echo "Stopping and Removing dotCMS app container..."
 
-CONTAINER_EXISTS="$(docker ps --all --quiet --filter=name="${APP_CONTAINER_NAME}")"
+# CONTAINER_EXISTS="$(docker ps --all --quiet --filter=name="${APP_CONTAINER_NAME}")"
 
-if [ -n "$CONTAINER_EXISTS" ]
-then
-    docker container stop ${APP_CONTAINER_NAME}
-    echo "${APP_CONTAINER_NAME} Stopped."
+# if [ -n "$CONTAINER_EXISTS" ]
+# then
+#     docker container stop ${APP_CONTAINER_NAME}
+#     echo "${APP_CONTAINER_NAME} Stopped."
 
-    docker container rm --force ${APP_CONTAINER_NAME}
-    echo "${APP_CONTAINER_NAME} Removed."
-else
-    echo "Docker container for ${APP_CONTAINER_NAME} NOT found running"
-fi
+#     docker container rm --force ${APP_CONTAINER_NAME}
+#     echo "${APP_CONTAINER_NAME} Removed."
+# else
+#     echo "Docker container for ${APP_CONTAINER_NAME} NOT found running"
+# fi
 
-docker volume rm ${VOLUME_NFS}
-echo "Existing NFS Volume Removed."
+# docker volume rm ${VOLUME_NFS}
+# echo "Existing NFS Volume Removed."
 
-IMAGE_EXISTS="$(docker images | grep ${APP_IMAGE_NAME})"
+# IMAGE_EXISTS="$(docker images | grep ${APP_IMAGE_NAME})"
 
-if [ -n "$IMAGE_EXISTS" ]
-then
-    docker rmi ${APP_IMAGE_NAME}
-    echo "Existing image Removed."
-else
-    echo "Docker Image ${APP_IMAGE_NAME} NOT found existed."
-fi
+# if [ -n "$IMAGE_EXISTS" ]
+# then
+#     docker rmi ${APP_IMAGE_NAME}
+#     echo "Existing image Removed."
+# else
+#     echo "Docker Image ${APP_IMAGE_NAME} NOT found existed."
+# fi
 
 
 # 4-> Download and unzip latest code files
@@ -104,7 +104,7 @@ echo "dotCMS artifacts are moved and extracted in project folder"
 # 5-> Start new Docker Container
 echo "Building dotCMS docker container with new Project artifacts..."
 echo "App Launch Environment : "${APP_LAUNCH_ENV}
-if [ "${APP_LAUNCH_ENV}" == "local" ] 
+if [ "$APP_LAUNCH_ENV" = "local" ] 
 then
     cd ${APP_DIR}/appLauncher/local/
 
