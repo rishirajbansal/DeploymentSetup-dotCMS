@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def getEnvVar(String envVarName){
-    return sh (script: "grep '${envVarName}' ${CICD_SCRIPT_LOCATION}/env.properties|cut -d'=' -f2", returnStdout: true).trim();
+    return sh (script: "grep '^${envVarName}' ${CICD_SCRIPT_LOCATION}/env.properties|cut -d'=' -f2", returnStdout: true).trim();
 }
 
 pipeline {
@@ -9,7 +9,7 @@ pipeline {
     agent any
 
     environment {
-        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/dev"
+        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/docker/cluster"
         DOTCMS_GIT_CREDS = credentials('dotcms-git')
         
     }
@@ -44,7 +44,7 @@ pipeline {
 
         stage('Init') {
             steps {
-                echo "Initializing CI/CD environment..."
+                echo "Initializing CI/CD environment for Docker Cluster..."
 
                  sh '''
                     find ${CICD_SCRIPT_LOCATION} -type f -iname "*.sh" -exec chmod u+x {} +
@@ -62,16 +62,16 @@ pipeline {
                     env.REMOTE_SERVER_INSTANCE_IP = getEnvVar('REMOTE_SERVER_INSTANCE_IP')
                     env.APP_LAUNCH_ENV = getEnvVar('APP_LAUNCH_ENV')
                     env.CONTAINERS_TO_DEPLOY = getEnvVar('CONTAINERS_TO_DEPLOY')
-                    env.DB_CONTAINER_NAME = getEnvVar('DB_CONTAINER_NAME')
-                    env.NFS_CONTAINER_NAME = getEnvVar('NFS_CONTAINER_NAME')
-                    env.APP_CONTAINER_NAME = getEnvVar('APP_CONTAINER_NAME')
-                    env.DOCKER_LOG_LEVEL = getEnvVar('DOCKER_LOG_LEVEL')
+                    // env.DB_CONTAINER_NAME = getEnvVar('DB_CONTAINER_NAME')
+                    // env.NFS_CONTAINER_NAME = getEnvVar('NFS_CONTAINER_NAME')
+                    // env.APP_CONTAINER_NAME = getEnvVar('APP_CONTAINER_NAME')
+                    // env.DOCKER_LOG_LEVEL = getEnvVar('DOCKER_LOG_LEVEL')
                     env.DOTCMS_APP_PORT = getEnvVar('DOTCMS_APP_PORT')
                     env.NFS_CONTAINER_IP = getEnvVar('NFS_CONTAINER_IP')
-                    env.VOLUME_NFS = getEnvVar('VOLUME_NFS')
-                    env.APP_IMAGE_NAME = getEnvVar('APP_IMAGE_NAME')
-                    env.DOTCMS_USERNAME = getEnvVar('DOTCMS_USERNAME')
-                    env.DOTCMS_USERPWD = getEnvVar('DOTCMS_USERPWD')
+                    // env.VOLUME_NFS = getEnvVar('VOLUME_NFS')
+                    // env.APP_IMAGE_NAME = getEnvVar('APP_IMAGE_NAME')
+                    // env.DOTCMS_USERNAME = getEnvVar('DOTCMS_USERNAME')
+                    // env.DOTCMS_USERPWD = getEnvVar('DOTCMS_USERPWD')
 
                 }
 

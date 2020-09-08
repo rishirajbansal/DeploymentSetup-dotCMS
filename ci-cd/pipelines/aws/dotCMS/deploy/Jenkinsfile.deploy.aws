@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def getEnvVar(String envVarName){
-    return sh (script: "grep '${envVarName}' ${CICD_SCRIPT_LOCATION}/env.properties|cut -d'=' -f2", returnStdout: true).trim();
+    return sh (script: "grep '^${envVarName}' ${CICD_SCRIPT_LOCATION}/../env.properties|cut -d'=' -f2", returnStdout: true).trim();
 }
 
 pipeline {
@@ -9,9 +9,14 @@ pipeline {
     agent any
 
     environment {
-        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/prod/deploy"
+        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/aws/dotCMS/deploy"
         DOTCMS_GIT_CREDS = credentials('dotcms-git')
-        
+    }
+
+    parameters {
+        string(name: 'deploymentDescription', defaultValue: 'Default - Deployment of dotCMS Application from Pipeline', description: 'Deployment Description')
+
+        string(name: 'appBundleName', defaultValue: 'dotCMSv2.zip', description: 'App bundle name with .zip ext')
     }
 
     stages {
@@ -20,7 +25,7 @@ pipeline {
 
             steps {
 
-                echo "Initializing CI/CD environment..."
+                echo "Initializing CI/CD environment for Application Deployment..."
 
                  sh '''
                     find ${CICD_SCRIPT_LOCATION} -type f -iname "*.sh" -exec chmod u+x {} +
@@ -41,8 +46,8 @@ pipeline {
                     env.S3_BUCKET_NAME_APP = getEnvVar('S3_BUCKET_NAME_APP')
                     env.EB_APPLICATION_NAME = getEnvVar('EB_APPLICATION_NAME')
                     env.EB_ENVIRONMENT_NAME = getEnvVar('EB_ENVIRONMENT_NAME')
-                    
-
+                    env.REGION = getEnvVar('REGION')
+                    env.ENV = getEnvVar('ENV')
                 }
 
             }
@@ -59,6 +64,38 @@ pipeline {
             }
         }
 
+        // stage('user-inputs') {
+        //     when {
+        //         allOf {
+        //             expression {currentBuild.result == null || currentBuild.result == 'SUCCESS'}
+        //         }
+        //     }
+
+        //     steps {
+        //         timeout(time: "${INPUT_WAIT_TIMEOUT}", unit: 'MINUTES') {
+        //             script {
+        //                 def v_deployDesc
+        //                 def v_appBundleName
+
+        //                 def deploy_inputs = input(
+        //                     id: 'deploy_inputs'
+        //                     message: "Provide further details for Deployment on AWS : ",
+        //                     ok: "Continue",
+        //                     parameters: [
+        //                         string(name: 'deploymentDescription', defaultValue: 'Default - Deployment of dotCMS Application from Pipeline', description: 'Deployment Description')
+        //                         string(name: 'appBundleName', defaultValue: 'None', description: 'App bundle name with .zip ext')
+        //                     ]
+        //                 )
+
+        //                 //Save to variables. Set to Default values if found empty
+        //                 v_deployDesc = deploy_inputs.deploymentDescription ? : 'Default - Deployment of dotCMS Application from Pipeline'
+        //                 v_appBundleName = deploy_inputs.appBundleName ? : 'dotCMSv2.zip'
+
+        //             }
+        //         }
+        //     }
+        // }
+
         stage('deploy') {
             when {
                 allOf {
@@ -72,7 +109,7 @@ pipeline {
                 withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'DOTCMS_REMOTE_APPLICATION_SERVER', \
                                              keyFileVariable: 'appServerPemKey')]) {
 
-                    sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh deploy ${appServerPemKey}"
+                    sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh deploy ${appServerPemKey} '${params.deploymentDescription}' ${appBundleName}"
                 }
 
                 echo "Deployment to AWS Elastic Beanstalk is done."

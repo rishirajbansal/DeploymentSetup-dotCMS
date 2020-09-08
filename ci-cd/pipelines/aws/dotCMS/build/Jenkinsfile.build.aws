@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def getEnvVar(String envVarName){
-    return sh (script: "grep '${envVarName}' ${CICD_SCRIPT_LOCATION}/env.properties|cut -d'=' -f2", returnStdout: true).trim();
+    return sh (script: "grep '^${envVarName}' ${CICD_SCRIPT_LOCATION}/../env.properties|cut -d'=' -f2", returnStdout: true).trim();
 }
 
 pipeline {
@@ -9,7 +9,7 @@ pipeline {
     agent any
 
     environment {
-        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/prod/build"
+        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/aws/dotCMS/build"
         DOTCMS_GIT_CREDS = credentials('dotcms-git')
         
     }
@@ -20,7 +20,7 @@ pipeline {
 
             steps {
 
-                echo "Initializing CI/CD environment..."
+                echo "Initializing CI/CD environment for Application Build..."
 
                  sh '''
                     find ${CICD_SCRIPT_LOCATION} -type f -iname "*.sh" -exec chmod u+x {} +
@@ -39,8 +39,8 @@ pipeline {
                     env.AWS_CLI_EXEC_PATH = getEnvVar('AWS_CLI_EXEC_PATH')
                     env.AWS_PROFILE_NAME = getEnvVar('AWS_PROFILE_NAME')
                     env.S3_BUCKET_NAME_APP = getEnvVar('S3_BUCKET_NAME_APP')
-                    
-
+                    env.REGION = getEnvVar('REGION')
+                    env.ENV = getEnvVar('ENV')
                 }
 
             }

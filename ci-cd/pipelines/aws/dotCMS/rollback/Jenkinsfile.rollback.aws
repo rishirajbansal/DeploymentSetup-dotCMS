@@ -1,0 +1,119 @@
+#!/usr/bin/env groovy
+
+def getEnvVar(String envVarName){
+    return sh (script: "grep '^${envVarName}' ${CICD_SCRIPT_LOCATION}/../env.properties|cut -d'=' -f2", returnStdout: true).trim();
+}
+
+pipeline {
+
+    agent any
+
+    environment {
+        CICD_SCRIPT_LOCATION = "${WORKSPACE}/ci-cd/pipelines/aws/dotCMS/rollback"
+        DOTCMS_GIT_CREDS = credentials('dotcms-git')
+    }
+
+    parameters {
+        string(name: 'deploymentDescription', defaultValue: 'Default - Rollback of dotCMS Application from Pipeline', description: 'Deployment Description')
+
+        string(name: 'appBundleName', defaultValue: 'dotCMSv2.zip', description: 'App bundle name with .zip ext')
+
+        string(name: 'preAppVersionName', defaultValue: 'None', description: 'Previous Application Version')
+    }
+
+    stages {
+
+        stage('Init') {
+
+            steps {
+
+                echo "Initializing CI/CD environment for Application Rollback..."
+
+                 sh '''
+                    find ${CICD_SCRIPT_LOCATION} -type f -iname "*.sh" -exec chmod u+x {} +
+                '''
+
+                script {
+                    echo "Setting up the env variables..."
+
+                    env.GIT_BRANCH_NAME = getEnvVar('GIT_BRANCH_NAME')
+                    env.GIT_CREDENTIALS_ID = getEnvVar('GIT_CREDENTIALS_ID')
+                    env.GIT_REPO_URL = getEnvVar('GIT_REPO_URL')
+                    env.GIT_DOWNLOAD_DIR = getEnvVar('GIT_DOWNLOAD_DIR')
+                    env.APP_DIR = getEnvVar('APP_DIR')
+                    env.REMOTE_SERVER_INSTANCE_USER = getEnvVar('REMOTE_SERVER_INSTANCE_USER')
+                    env.REMOTE_SERVER_INSTANCE_IP = getEnvVar('REMOTE_SERVER_INSTANCE_IP')
+                    env.AWS_CLI_EXEC_PATH = getEnvVar('AWS_CLI_EXEC_PATH')
+                    env.AWS_PROFILE_NAME = getEnvVar('AWS_PROFILE_NAME')
+                    env.S3_BUCKET_NAME_APP = getEnvVar('S3_BUCKET_NAME_APP')
+                    env.EB_APPLICATION_NAME = getEnvVar('EB_APPLICATION_NAME')
+                    env.EB_ENVIRONMENT_NAME = getEnvVar('EB_ENVIRONMENT_NAME')
+                    env.REGION = getEnvVar('REGION')
+                    env.ENV = getEnvVar('ENV')
+                }
+
+            }
+
+        }
+
+        stage('pre-cleanup') {
+            steps {
+                echo "Pre Cleaning up the environment..."
+
+                //clean up the whole workspace
+                // cleanWs(){
+                // }
+            }
+        }
+
+        stage('rollback') {
+            when {
+                allOf {
+                    expression {currentBuild.result == null || currentBuild.result == 'SUCCESS'}
+                }
+            }
+
+            steps {
+                echo "Rollback from AWS Elastic Beanstalk is in progress..."
+
+                withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'DOTCMS_REMOTE_APPLICATION_SERVER', \
+                                             keyFileVariable: 'appServerPemKey')]) {
+
+                    sh "${CICD_SCRIPT_LOCATION}/remoteInstance-handler.sh rollback ${appServerPemKey} '${params.deploymentDescription}' ${appBundleName} '${preAppVersionName}'"
+                }
+
+                echo "Rollback from AWS Elastic Beanstalk is done."
+            }
+        }
+
+
+    }
+
+    post {
+
+        always {
+            echo "CI/CD process is finished."
+
+            echo "Build No.: ${env.BUILD_NUMBER}"
+            echo "Build ID.: ${env.BUILD_ID}"
+            echo "Build Status: ${currentBuild.currentResult}"
+            echo "Job Name: ${JOB_NAME}"
+            echo "Workspace Location: ${WORKSPACE}"
+            echo "Build completed in : ${currentBuild.durationString}"
+        }
+
+        success {
+            echo "CI/CD process is successfull and rollback is done."
+        }
+
+        failure {
+            echo "CI/CD process failed"
+        }
+
+        cleanup {
+             echo "In Post-cleanup, no cleanup required as of now."
+        }
+
+    }
+
+}
