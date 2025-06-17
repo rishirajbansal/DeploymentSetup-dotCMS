@@ -1,4 +1,4 @@
-# Deployment Setup [CI/CD - Pipelines] for dotCMS Application
+# Deployment Setup [CI/CD - Pipelines]
 
 ## Contents
 
